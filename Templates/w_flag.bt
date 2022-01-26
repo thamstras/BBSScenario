@@ -1,0 +1,107 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+SetBackColor(cLtYellow);
+
+enum <uchar> WorldFlag
+{
+    _CODE_END = 0,
+    _CODE_NEW_EPISODE = 1,
+    _CODE_OLD_EPISODE = 2,
+    _CODE_HIDDEN = 3,
+    _CODE_DARKNESS = 4,
+    _CODE_FREE = 5,
+    _CODE_LANDABLE = 6,
+    _CODE_SHIELD = 7,
+    _CODE_CLEARED = 8,
+    _CODE_NEXT = 9,
+    _CODE_ROUTELESS = 10,
+    _CODE_DISCONNECT = 11,
+    _CODE_CONNECT = 12,
+    _CODE_DICE_OPEN = 13,
+    _CODE_REFUSE = 14,
+    _CODE_UNKNOWN = 15,
+    _CODE_KNOWN = 16,
+    _CODE_MESSAGE = 17,
+    _CODE_UNCLEAR = 18
+};
+
+typedef struct
+{
+    SetBackColor(cLtBlue);
+    WorldFlag _code;
+    uchar _size;
+    SetBackColor(cDkBlue);
+    switch (_code)
+    {
+        case _CODE_END:
+        case _CODE_OLD_EPISODE:
+            break;
+
+        case _CODE_NEW_EPISODE:
+            struct
+            {
+                uchar world;
+                uchar episode;
+            } info[_size];
+            break;
+
+        case _CODE_MESSAGE:
+            // CODE_MESSAGE is actually more complex than this but this seems to work so whatev.
+            ushort info[_size];
+            break;
+        
+        case _CODE_HIDDEN:
+        case _CODE_DARKNESS:
+        case _CODE_FREE:
+        case _CODE_LANDABLE:
+        case _CODE_SHIELD:
+        case _CODE_CLEARED:
+        case _CODE_NEXT:
+        case _CODE_ROUTELESS:
+        case _CODE_DISCONNECT:
+        case _CODE_CONNECT:
+        case _CODE_DICE_OPEN:
+        case _CODE_REFUSE:
+        case _CODE_UNKNOWN:
+        case _CODE_KNOWN:
+        case _CODE_UNCLEAR:
+            short worlds[_size];
+            break;
+        
+            
+    }
+} _CODE;
+
+struct ParseCode
+{
+    do
+    {
+        pcode = ReadUByte();
+        _CODE code;
+    } while (pcode != _CODE_END);
+};
+
+uint ver;
+uint count;
+struct
+{
+    uint ID;
+    uint offset;
+} info[count];
+local int i = 0;
+local uchar pcode;
+for (i = 0; i < count; i++)
+{
+    FSeek(info[i].offset);
+    ParseCode parse;
+};
